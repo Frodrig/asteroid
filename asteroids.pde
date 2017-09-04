@@ -2,6 +2,7 @@ Ship ship;
 StarField starField;
 AsteroidField asteroidField;
 HUD hud;
+ScoreManager scoreManager;
 boolean spaceKeyPress;
 int stage;
 PFont debugFont;
@@ -13,13 +14,17 @@ enum GameState {
 GameState currentGameState;
 PFont asteroidFont;
 
+void settings() {
+  size(1200, 568);
+}
+
 void setup() {
   //fullScreen();
-  size(1224, 668);
   stage = 1;
   ship = new Ship();
   starField = new StarField(100, 0.5);
   hud = new HUD();
+  scoreManager = new ScoreManager();
   spaceKeyPress = false;
   debugFont = createFont("Arial", 12);
   asteroidFont = createFont("Vectorb.ttf", 38);

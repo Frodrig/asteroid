@@ -75,7 +75,7 @@ class AsteroidField {
             newAsteroids.add(newAsteroid);
           }
         }
-        hud.addPointsByDestroyAsteroid(asteroidIt.circleColliderRadius); //<>// //<>// //<>//
+        hud.addPointsByDestroyAsteroid(asteroidIt.circleColliderRadius); //<>// //<>// //<>// //<>//
         asteroids.remove(i);
       }
     }
