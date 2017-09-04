@@ -7,9 +7,9 @@ boolean spaceKeyPress;
 int stage;
 PFont debugFont;
 enum GameState {
-  PRESS_START,
-  PLAYING,
-  GAME_OVER
+  PRESS_START, 
+    PLAYING, 
+    GAME_OVER
 };
 GameState currentGameState;
 PFont asteroidFont;
@@ -37,13 +37,14 @@ void draw() {
   } else if (currentGameState == GameState.PLAYING) {
     updatePlayingState();
   } else if (currentGameState == GameState.GAME_OVER) {
+    updateGameOverState();
   }
 }
 
 void updatePressStartState() {
-    background(0);  
-    updatePressStartStateKeys();
-    updatePressStartStateScene();
+  background(0);  
+  updatePressStartStateKeys();
+  updatePressStartStateScene();
 }
 
 void updatePressStartStateKeys() {
@@ -56,7 +57,7 @@ void updatePressStartStateScene() {
   background(0);
   starField.update();
   asteroidField.update();
-  hud.update(); 
+  hud.update();
 }
 
 void changeToPressStartState() {
@@ -71,19 +72,20 @@ void changeToPlayingState() {
 }
 
 void changeToGameOverState() {
-  changeToPressStartState();
+    currentGameState = GameState.GAME_OVER;
+  //changeToPressStartState();
 }
 
 void updatePlayingState() {
   background(0);  
   updatePlayingStateKeys();
-  updatePlaingStateScene();
+  updatePlayingStateScene();
 }
 
 void updatePlayingStateKeys() {
   if (asteroidField.isFieldEmpty())
     return;
-  
+
   if (keyPressed) {
     if (key == CODED && keyCode == LEFT) {
       ship.turnLeft();
@@ -100,9 +102,9 @@ void updatePlayingStateKeys() {
   }
 }
 
-void updatePlaingStateScene() {
+void updatePlayingStateScene() {
   starField.update();
-  
+
   if (asteroidField.isFieldEmpty()) {
     stage += 1;
     ship.removeAllShots();
@@ -113,10 +115,28 @@ void updatePlaingStateScene() {
     asteroidField.update();
     ship.update();
   }
-  
+
   hud.update(); 
-  
+
   if (hud.lives < 1) {
     changeToGameOverState();
   }
+}
+
+void updateGameOverState() {
+  background(0);  
+  updateGameOverStateKeys();
+  updateGameOverStateScene();
+}
+
+void updateGameOverStateKeys() {
+  if (keyPressed) {
+  }
+}
+
+void updateGameOverStateScene() {
+  background(0);
+  starField.update();
+  asteroidField.update();
+  hud.update();
 }
