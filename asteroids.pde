@@ -12,7 +12,8 @@ enum GameState {
     GAME_OVER
 };
 GameState currentGameState;
-PFont asteroidFont;
+PFont asteroidFontBig;
+PFont asteroidFontMed;
 String curScoreName;
 boolean curScoreNameKeyPressed;
 int auxiliarTimer;
@@ -31,7 +32,8 @@ void setup() {
   scoreManager = new ScoreManager();
   spaceKeyPress = false;
   debugFont = createFont("Arial", 12);
-  asteroidFont = createFont("Vectorb.ttf", 38);
+  asteroidFontBig = createFont("Vectorb.ttf", 64);
+  asteroidFontMed = createFont("Vectorb.ttf", 32);
   changeToPressStartState();
 }
 

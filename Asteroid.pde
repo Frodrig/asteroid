@@ -151,7 +151,7 @@ class Asteroid {
 
     fill(0);  
     if (currentGameState == GameState.PRESS_START || currentGameState == GameState.GAME_OVER) {
-      stroke(255, 100);
+      stroke(255, 55);
     } else {
       stroke(255 * (hitted ? 0.5 : 1), fadeAlpha);
     }

@@ -64,23 +64,23 @@ class HUD {
 
   void updatePressStartRender() {
     if (shouldDrawHighScores) {
-      textFont(asteroidFont, 64);
+      textFont(asteroidFontBig);
       stroke(255);
       fill(255);
       textAlign(CENTER);
       text("High Scores", width/2, 100);
 
-      textFont(asteroidFont, 32);
+      textFont(asteroidFontMed);
       stroke(255);
       fill(255);
       textAlign(LEFT);
       ArrayList<ScoreData> scores = scoreManager.getScores();
-      for (int i=0; i < maxSize; ++i) {
+      for (int i=0; i < scores.size(); ++i) {
         text(convertToNumericString(i+1, 2) + "." + " " + convertToNumericString(scores.get(i).score, 7) + " - " + scores.get(i).name, width/3, 170 + 40*i);
       }
       
     } else {
-      textFont(asteroidFont, 64);
+      textFont(asteroidFontBig);
       stroke(255);
       fill(255);
       textAlign(CENTER);
@@ -99,7 +99,7 @@ class HUD {
   }
 
   void updatePlayingRender() {
-    textFont(asteroidFont);
+    textFont(asteroidFontBig);
     textAlign(LEFT);
     stroke(255);
     fill(255);
@@ -110,15 +110,15 @@ class HUD {
   }
 
   void updateGameOverRender() {
-    textFont(asteroidFont, 64);
+    textFont(asteroidFontBig);
     stroke(255);
     fill(255);
     textAlign(CENTER);
     text("Your score", width/2, height/3);
-    textFont(asteroidFont, 64);
+    textFont(asteroidFontBig, 64);
     textAlign(CENTER);
     text(this.score, width/2, height/2);
-    textFont(asteroidFont, 64);
+    textFont(asteroidFontBig, 64);
     textAlign(CENTER);
     text(curScoreName, width/2, 100 + height/2);
   }
