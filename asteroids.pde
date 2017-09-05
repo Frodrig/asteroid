@@ -1,4 +1,4 @@
-Ship ship;
+Ship ship; //<>//
 StarField starField;
 AsteroidField asteroidField;
 HUD hud;
@@ -13,6 +13,10 @@ enum GameState {
 };
 GameState currentGameState;
 PFont asteroidFont;
+String curScoreName;
+boolean curScoreNameKeyPressed;
+int auxiliarTimer;
+boolean shouldDrawHighScores;
 
 void settings() {
   size(1200, 568);
@@ -50,6 +54,20 @@ void updatePressStartState() {
 void updatePressStartStateKeys() {
   if (keyPressed) {
     changeToPlayingState();
+  } else {
+    if (millis() > auxiliarTimer) {
+      if (scoreManager.getScore().size() > 0) {
+        shouldDrawHighScores = !shouldDrawHighScores;
+        if (shouldDrawHighScores) {
+          auxiliarTimer = millis() + 8000;
+        } else {
+          auxiliarTimer = millis() + 5000;
+        }
+      } else {
+        shouldDrawHighScores = false;
+        auxiliarTimer = millis() + 5000;
+      }
+    }
   }
 }
 
@@ -62,6 +80,8 @@ void updatePressStartStateScene() {
 
 void changeToPressStartState() {
   asteroidField = new AsteroidField(6, 100, 50);
+  auxiliarTimer = millis() + 5000;
+  shouldDrawHighScores = false;
   currentGameState = GameState.PRESS_START;
 }
 
@@ -72,7 +92,10 @@ void changeToPlayingState() {
 }
 
 void changeToGameOverState() {
-    currentGameState = GameState.GAME_OVER;
+  currentGameState = GameState.GAME_OVER;
+
+  curScoreName = "";
+  curScoreNameKeyPressed = false;
   //changeToPressStartState();
 }
 
@@ -131,6 +154,25 @@ void updateGameOverState() {
 
 void updateGameOverStateKeys() {
   if (keyPressed) {
+    if (!curScoreNameKeyPressed) {
+      if ((key >= 'A' && key <= 'Z') || (key >= 'a' && key <= 'z')) {
+        if (curScoreName.length() < 10) {
+          curScoreName += key;
+          curScoreName.toUpperCase();
+        }
+      } else if (key == BACKSPACE) {
+        if (curScoreName.length() > 0) {
+          curScoreName = curScoreName.substring(0, curScoreName.length() - 1);
+        }
+      } else if (key == ENTER) {
+        scoreManager.addScore(hud.score, curScoreName);
+        changeToPressStartState();
+        
+      }
+    }
+    curScoreNameKeyPressed = true;
+  } else {
+    curScoreNameKeyPressed = false;
   }
 }
 

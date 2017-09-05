@@ -63,11 +63,29 @@ class HUD {
   }
 
   void updatePressStartRender() {
-    textFont(asteroidFont, 64);
-    stroke(255);
-    fill(255);
-    textAlign(CENTER);
-    text("Press any key to start", width/2, height/2);
+    if (shouldDrawHighScores) {
+      textFont(asteroidFont, 64);
+      stroke(255);
+      fill(255);
+      textAlign(CENTER);
+      text("High Scores", width/2, 100);
+
+      textFont(asteroidFont, 32);
+      stroke(255);
+      fill(255);
+      textAlign(LEFT);
+      ArrayList<ScoreData> scores = scoreManager.getScore();
+      for (int i=0; i < scores.size(); ++i) {
+        text(i + "." + " " + scores.get(i).name + " " + scores.get(i).score, width/2, 140 + 15*i);
+      }
+      
+    } else {
+      textFont(asteroidFont, 64);
+      stroke(255);
+      fill(255);
+      textAlign(CENTER);
+      text("Press any key to start", width/2, height/2);
+    }
   }
 
   void updatePlayingRender() {
@@ -90,10 +108,11 @@ class HUD {
     textFont(asteroidFont, 64);
     textAlign(CENTER);
     text(this.score, width/2, height/2);
+    textFont(asteroidFont, 64);
+    textAlign(CENTER);
+    text(curScoreName, width/2, 100 + height/2);
   }
-
-
-
+  
   void drawShipAt(int x, int y) {
     stroke(155);
     noFill();

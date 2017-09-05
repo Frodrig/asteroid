@@ -8,7 +8,7 @@ class ScoreManager {
     Load();
   }
 
-  public void ddScore(int _score, String _name) {
+  public void addScore(int _score, String _name) {
     scores.add(new ScoreData(_score, _name));
     sortScore();
     Save();
