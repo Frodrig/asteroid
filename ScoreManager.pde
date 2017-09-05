@@ -14,7 +14,7 @@ class ScoreManager {
     Save();
   }
 
-  public ArrayList<ScoreData> getScore() {
+  public ArrayList<ScoreData> getScores() {
     return scores;
   }
 
@@ -34,8 +34,8 @@ class ScoreManager {
 
   private void Load() {
     scores = new ArrayList<ScoreData>();
-
-    if (existFile()) {
+    boolean existFile = existFile();
+    if (existFile) {
       JSONObject json = loadJSONObject("data/scores.json");
       if (json != null) {
         JSONArray values = json.getJSONArray("scores");
@@ -55,7 +55,7 @@ class ScoreManager {
   }
 
   private boolean existFile() {
-    File f = new File("data/scores.json");
+    File f = new File(dataPath("scores.json"));
     if (f.exists() && !f.isDirectory()) { 
       return true;
     }

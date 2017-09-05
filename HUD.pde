@@ -74,9 +74,9 @@ class HUD {
       stroke(255);
       fill(255);
       textAlign(LEFT);
-      ArrayList<ScoreData> scores = scoreManager.getScore();
-      for (int i=0; i < scores.size(); ++i) {
-        text(i + "." + " " + scores.get(i).name + " " + scores.get(i).score, width/2, 140 + 15*i);
+      ArrayList<ScoreData> scores = scoreManager.getScores();
+      for (int i=0; i < maxSize; ++i) {
+        text(convertToNumericString(i+1, 2) + "." + " " + convertToNumericString(scores.get(i).score, 7) + " - " + scores.get(i).name, width/3, 170 + 40*i);
       }
       
     } else {
@@ -86,6 +86,16 @@ class HUD {
       textAlign(CENTER);
       text("Press any key to start", width/2, height/2);
     }
+  }
+  
+  String convertToNumericString(int amount, int maxSize) {
+    String retStr = "";
+    String amountStr = "" + amount;
+    for (int i = 0; i < maxSize - amountStr.length(); ++i) {
+      retStr = retStr + "0";
+    }
+    retStr = retStr + amountStr;
+    return retStr; 
   }
 
   void updatePlayingRender() {

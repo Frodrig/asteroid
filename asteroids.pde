@@ -46,7 +46,19 @@ void draw() {
 }
 
 void updatePressStartState() {
-  background(0);  
+  if (millis() > auxiliarTimer) {
+      if (scoreManager.getScores().size() > 0) {
+        shouldDrawHighScores = !shouldDrawHighScores;
+        if (shouldDrawHighScores) {
+          auxiliarTimer = millis() + 8000;
+        } else {
+          auxiliarTimer = millis() + 3000;
+        }
+      } else {
+        shouldDrawHighScores = false;
+        auxiliarTimer = millis() + 3000;
+      }
+    }
   updatePressStartStateKeys();
   updatePressStartStateScene();
 }
@@ -55,19 +67,7 @@ void updatePressStartStateKeys() {
   if (keyPressed) {
     changeToPlayingState();
   } else {
-    if (millis() > auxiliarTimer) {
-      if (scoreManager.getScore().size() > 0) {
-        shouldDrawHighScores = !shouldDrawHighScores;
-        if (shouldDrawHighScores) {
-          auxiliarTimer = millis() + 8000;
-        } else {
-          auxiliarTimer = millis() + 5000;
-        }
-      } else {
-        shouldDrawHighScores = false;
-        auxiliarTimer = millis() + 5000;
-      }
-    }
+    
   }
 }
 
@@ -80,7 +80,7 @@ void updatePressStartStateScene() {
 
 void changeToPressStartState() {
   asteroidField = new AsteroidField(6, 100, 50);
-  auxiliarTimer = millis() + 5000;
+  auxiliarTimer = millis() + 3000;
   shouldDrawHighScores = false;
   currentGameState = GameState.PRESS_START;
 }
