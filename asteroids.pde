@@ -14,13 +14,14 @@ enum GameState {
 GameState currentGameState;
 PFont asteroidFontBig;
 PFont asteroidFontMed;
+PFont arialFont;
 String curScoreName;
 boolean curScoreNameKeyPressed;
 int auxiliarTimer;
 boolean shouldDrawHighScores;
 
 void settings() {
-  size(1200, 568);
+  size(1200, 668);
 }
 
 void setup() {
@@ -34,10 +35,11 @@ void setup() {
   debugFont = createFont("Arial", 12);
   asteroidFontBig = createFont("Vectorb.ttf", 64);
   asteroidFontMed = createFont("Vectorb.ttf", 32);
+  arialFont = createFont("Arial", 12);
   changeToPressStartState();
 }
 
-void draw() {
+void draw() {  
   if (currentGameState == GameState.PRESS_START) {
     updatePressStartState();
   } else if (currentGameState == GameState.PLAYING) {
@@ -45,6 +47,10 @@ void draw() {
   } else if (currentGameState == GameState.GAME_OVER) {
     updateGameOverState();
   }
+  textFont(arialFont);
+  fill(255);
+  text(frameRate, 50, height - 30);
+
 }
 
 void updatePressStartState() {

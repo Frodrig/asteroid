@@ -32,6 +32,10 @@
     "name": "dd"
   },
   {
+    "score": 100,
+    "name": ""
+  },
+  {
     "score": 20,
     "name": "fer"
   },
@@ -42,5 +46,9 @@
   {
     "score": 20,
     "name": "daniel"
+  },
+  {
+    "score": 20,
+    "name": "ddd"
   }
 ]}
