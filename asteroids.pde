@@ -21,7 +21,7 @@ int auxiliarTimer;
 boolean shouldDrawHighScores;
 
 void settings() {
-  size(1200, 668);
+  size(962, 720);
 }
 
 void setup() {
@@ -50,6 +50,7 @@ void draw() {
   textFont(arialFont);
   fill(255);
   text(frameRate, 50, height - 30);
+  text("keypressed: " + keyPressed, 50, height-60);
 
 }
 
@@ -175,7 +176,7 @@ void updateGameOverStateKeys() {
         if (curScoreName.length() > 0) {
           curScoreName = curScoreName.substring(0, curScoreName.length() - 1);
         }
-      } else if (key == ENTER) {
+      } else if (key == ENTER && curScoreName.length() > 0) {
         scoreManager.addScore(hud.score, curScoreName);
         changeToPressStartState();
         

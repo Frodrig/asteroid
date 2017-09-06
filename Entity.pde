@@ -56,7 +56,7 @@ class Entity {
     acceleration.add(adjustedForce);
   }
   
-  void updateAgent() {
+  void updateMovement() {
     velocity.add(acceleration);
     location.add(velocity);
     

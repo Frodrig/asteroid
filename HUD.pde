@@ -76,11 +76,11 @@ class HUD {
       textAlign(LEFT);
       ArrayList<ScoreData> scores = scoreManager.getScores();
       for (int i=0; i < min(10, scores.size()); ++i) {
-        text(convertToNumericString(i+1, 2) + "." + " " + convertToNumericString(scores.get(i).score, 7) + " - " + scores.get(i).name, width/3, 170 + 40*i);
+        text(convertToNumericString(i+1, 2) + "." + " " + convertToNumericString(scores.get(i).score, 7) + " - " + scores.get(i).name, width/5, 170 + 40*i);
       }
       
     } else {
-      textFont(asteroidFontBig);
+      textFont(asteroidFontBig, 48);
       stroke(255);
       fill(255);
       textAlign(CENTER);
@@ -103,9 +103,9 @@ class HUD {
     textAlign(LEFT);
     stroke(255);
     fill(255);
-    text(score, 10, 50);
+    text(score, 10, 70);
     for (int i = 0; i < lives; i++) {
-      drawShipAt(20 + i * 20, 80);
+      drawShipAt(20 + i * 20, 100);
     }
   }
 
