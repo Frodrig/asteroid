@@ -75,7 +75,7 @@ class HUD {
       fill(255);
       textAlign(LEFT);
       ArrayList<ScoreData> scores = scoreManager.getScores();
-      for (int i=0; i < scores.size(); ++i) {
+      for (int i=0; i < min(10, scores.size()); ++i) {
         text(convertToNumericString(i+1, 2) + "." + " " + convertToNumericString(scores.get(i).score, 7) + " - " + scores.get(i).name, width/3, 170 + 40*i);
       }
       

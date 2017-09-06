@@ -1,5 +1,21 @@
 {"scores": [
   {
+    "score": 2230,
+    "name": "daniel"
+  },
+  {
+    "score": 1810,
+    "name": "fer"
+  },
+  {
+    "score": 420,
+    "name": "hugo"
+  },
+  {
+    "score": 270,
+    "name": "fer"
+  },
+  {
     "score": 100,
     "name": "fer"
   },
@@ -8,7 +24,23 @@
     "name": "d"
   },
   {
-    "score": 270,
+    "score": 100,
+    "name": "d"
+  },
+  {
+    "score": 100,
+    "name": "dd"
+  },
+  {
+    "score": 20,
     "name": "fer"
+  },
+  {
+    "score": 20,
+    "name": "fer"
+  },
+  {
+    "score": 20,
+    "name": "daniel"
   }
 ]}

@@ -8,9 +8,9 @@ class ScoreData implements Comparable<ScoreData> {
   }
   
   public int compareTo(ScoreData _scoreData) {
-    if (score < _scoreData.score) {
+    if (score > _scoreData.score) {
       return -1;
-    } else if (score > _scoreData.score) {
+    } else if (score < _scoreData.score) {
       return 1;
     } else {
       return 0;

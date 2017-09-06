@@ -85,12 +85,14 @@ void changeToPressStartState() {
   auxiliarTimer = millis() + 3000;
   shouldDrawHighScores = false;
   currentGameState = GameState.PRESS_START;
+  keyPressed = false;
 }
 
 void changeToPlayingState() {
   asteroidField.generateAsteroids(4, 100, 50);
   hud.reset();
   currentGameState = GameState.PLAYING;
+  keyPressed = false;
 }
 
 void changeToGameOverState() {
@@ -99,6 +101,7 @@ void changeToGameOverState() {
   curScoreName = "";
   curScoreNameKeyPressed = false;
   //changeToPressStartState();
+  keyPressed = false;
 }
 
 void updatePlayingState() {
