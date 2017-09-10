@@ -23,7 +23,7 @@ class Shooter {
       if (shoots[i] == null) {
         PVector shootDirection = _direction.get().normalize();
         PVector shootLocation = _location.get(); 
-        shoots[i] = new Shoot(shootLocation, shootDirection, origin == ShooterOriginType.PLAYER ? true : false);
+        shoots[i] = new Shoot(shootLocation, shootDirection, true);
         break;
       }
     }

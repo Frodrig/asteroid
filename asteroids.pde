@@ -3,6 +3,7 @@ StarField starField;
 AsteroidField asteroidField;
 HUD hud;
 ScoreManager scoreManager;
+OvniManager ovniManager;
 boolean spaceKeyPress;
 int stage;
 PFont debugFont;
@@ -20,6 +21,7 @@ boolean curScoreNameKeyPressed;
 int auxiliarTimer;
 boolean shouldDrawHighScores;
 
+
 void settings() {
   size(962, 720);
 }
@@ -31,12 +33,13 @@ void setup() {
   starField = new StarField(100, 0.5);
   hud = new HUD();
   scoreManager = new ScoreManager();
+  ovniManager = new OvniManager();
   spaceKeyPress = false;
   debugFont = createFont("Arial", 12);
   asteroidFontBig = createFont("Vectorb.ttf", 64);
   asteroidFontMed = createFont("Vectorb.ttf", 32);
   arialFont = createFont("Arial", 12);
-  changeToPressStartState();
+  changeToPressStartState();  
 }
 
 void draw() {  
@@ -51,7 +54,6 @@ void draw() {
   fill(255);
   text(frameRate, 50, height - 30);
   text("keypressed: " + keyPressed, 50, height-60);
-
 }
 
 void updatePressStartState() {
@@ -98,6 +100,7 @@ void changeToPressStartState() {
 void changeToPlayingState() {
   asteroidField.generateAsteroids(4, 100, 50);
   hud.reset();
+  ovniManager.reset();
   currentGameState = GameState.PLAYING;
   keyPressed = false;
 }
@@ -140,15 +143,17 @@ void updatePlayingStateKeys() {
 void updatePlayingStateScene() {
   starField.update();
 
-  if (asteroidField.isFieldEmpty()) {
+  if (asteroidField.isFieldEmpty() && !ovniManager.existCurrentOvni()) {
     stage += 1;
     ship.removeAllShots();
     int velocityRange = 50 + int(random(stage * 10));
     velocityRange = constrain(velocityRange, 50, 150);
     asteroidField.generateAsteroids(int(random(4, 6)), 100, velocityRange);
+    ovniManager.reset();
   } else {
     asteroidField.update();
     ship.update();
+    ovniManager.update();
   }
 
   hud.update(); 
