@@ -1,43 +1,66 @@
 class Shoot {
-  PVector location;
-  PVector velocity;
-  float velocityMag;
-  int endMillis;
-  int drawScale;
+  private PVector location;
+  private PVector velocity;
+  private float velocityMag;
+  private int endMillis;
+  private int drawScale;
+  private boolean endByTime;
+  private boolean isFinished;
   
-  Shoot(PVector _location, PVector _direction) {
+  Shoot(PVector _location, PVector _direction, boolean _endByTime) {
     velocityMag = 10;
     location = _location.get();
+    endByTime = _endByTime;
     velocity = _direction.get().normalize().mult(velocityMag);
-    endMillis = millis() + int(1000.0 * 0.8);
+    if (endByTime) {
+      endMillis = millis() + int(1000.0 * 0.8);
+    }
     drawScale = 2;
   }
   
-  boolean isFinished() {
-    boolean isByTime = millis() > endMillis;
-    boolean is = isByTime;
-   
-    return is;
+  public boolean isFinished() {
+    return isFinished;
   }
   
-  void updateLogic() {
-    if (!isFinished()) {
+  public PVector getLocation() {
+    return location;
+  }
+  
+  public void update() {
+    updateLogic();
+    updateRender();
+  }
+  
+  public void updateLogic() {
+    checkFinished();
+    if (!isFinished) {
       move();
     }
   }
   
-  void updateRender() {
+  private void checkFinished() {
+    if (endByTime) {
+      isFinished = millis() > endMillis;
+    } else {
+      isFinished = location.x > width || location.x < 0 || location.y > height || location.y < 0;
+    }
+  }
+  
+  private void updateRender() {
     if (!isFinished()) {
       render();
     }
   }
   
-  void move() {
+  private void move() {
     location.add(velocity);
     updateEdgePosition();
   }
   
-  void updateEdgePosition() {
+  private void updateEdgePosition() {
+    if (endByTime) {
+    }
+    
     if (location.x > width) {
       location.x = 0;
     } else if (location.x < 0) {
@@ -50,7 +73,7 @@ class Shoot {
     }
   }
   
-  void render() {
+  private void render() {
     fill(255);
     stroke(255);
     ellipse(location.x, location.y, drawScale, drawScale);

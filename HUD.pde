@@ -119,8 +119,8 @@ class HUD {
     textAlign(CENTER);
     text(this.score, width/2, height/2);
     textFont(asteroidFontBig, 64);
-    textAlign(CENTER);
-    text(curScoreName, width/2, 100 + height/2);
+    textAlign(LEFT);
+    text(">" + curScoreName, width/4, 100 + height/2);
   }
   
   void drawShipAt(int x, int y) {

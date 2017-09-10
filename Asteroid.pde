@@ -7,7 +7,7 @@ class Asteroid {
   PVector velocity;
   PVector location;
   ArrayList<PVector> allVertex;
-  boolean hitted;
+  private ShooterOriginType hittedOrigin;
   int fadeAlpha;
   
   
@@ -37,7 +37,7 @@ class Asteroid {
     PVector dirToShipWhithNoise = PVector.add(dirToShip, (new PVector(cos(TWO_PI), sin(TWO_PI))).normalize().mult(0.2)).normalize();
    // PVector forceToShip = PVector.add(location, ).normalize();
     applyForce(dirToShipWhithNoise.mult(random(_topSpeed/2, _topSpeed)));
-    hitted = false;
+    hittedOrigin = ShooterOriginType.NONE;
     fadeAlpha = 0;
   }
   
@@ -83,7 +83,29 @@ class Asteroid {
     PVector adjustedForce = force.get().div(size);
     acceleration.add(adjustedForce);
   }
-   
+  
+  public PVector getLocation() {
+    return location;
+  }
+  
+  public float getRadius() {
+    return circleColliderRadius;
+  }
+  
+  public void setHitted(ShooterOriginType _origin) {
+    hittedOrigin = _origin;
+  }
+  
+  public boolean isHitted() {
+    return hittedOrigin != ShooterOriginType.NONE;
+  }
+  
+  public boolean isHittedByPlayer() {
+    return hittedOrigin == ShooterOriginType.PLAYER;
+  }
+  
+  public 
+  
   void update() {
     updateLogic();
     updateAsteroidEdges();
@@ -101,7 +123,6 @@ class Asteroid {
   void updateLogic() {
     updateMove();
     if (currentGameState == GameState.PLAYING) {
-      updateShootingCheck();  
       updateShipCollisionCheck();
     }
   }
@@ -112,21 +133,11 @@ class Asteroid {
     acceleration.mult(0);
   }
   
-  void updateShootingCheck() {
-     for (int i = 0; i < ship.shoots.length; ++i) {
-      if (ship.shoots[i] != null && checkIntersect(ship.shoots[i].location)) {
-        hitted = true;
-        ship.shoots[i] = null;
-        break;
-      }
-    }
-  }
-  
   void updateShipCollisionCheck() {
     if (!ship.isInBlinkMode() && ship.checkCollisionWithAsteroid(this)) {
       ship.setDestroyed();
       hud.removeLive();
-      hitted = true;
+      hittedOrigin = ShooterOriginType.PLAYER;
     }
   }
    
@@ -153,7 +164,7 @@ class Asteroid {
     if (currentGameState == GameState.PRESS_START || currentGameState == GameState.GAME_OVER) {
       stroke(255, 55);
     } else {
-      stroke(255 * (hitted ? 0.5 : 1), fadeAlpha);
+      stroke(255 * (isHitted() ? 0.5 : 1), fadeAlpha);
     }
     
     pushMatrix();
