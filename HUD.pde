@@ -39,7 +39,7 @@ class HUD {
   void reset() {
     score = 0;
     scoreForNewLive = 0;
-    lives = 1;
+    lives = 3;
   }
 
   void update() {

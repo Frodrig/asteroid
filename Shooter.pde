@@ -55,6 +55,8 @@ class Shooter {
 
   private void updateCollisionChecks() {
     updateAsteroidCollisionChecks();
+    updateOvniCollisionChecks();
+    updateShipCollisionChecks();
   }
 
   private void updateAsteroidCollisionChecks() {
@@ -67,6 +69,34 @@ class Shooter {
               shoots[i] = null;
               break;
             }
+          }
+        }
+      }
+    }
+  }
+  
+  private void updateOvniCollisionChecks() {
+    if (origin == ShooterOriginType.PLAYER) {
+      Ovni currentOvni = ovniManager.getCurrentOvni();
+      if (currentOvni != null) {
+        for (int i = 0; i < shoots.length; i++) {
+          if (shoots[i] != null) {
+            if (MathUtils.checkIntersect(shoots[i].getLocation(), currentOvni.getLocation(), 1, currentOvni.getRadius())) {
+              currentOvni.setDestroyedByShip();
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  private void updateShipCollisionChecks() {
+    if (origin == ShooterOriginType.ENEMY) {
+      for (int i = 0; i < shoots.length; i++) {
+        if (shoots[i] != null) {
+          if (MathUtils.checkIntersect(shoots[i].getLocation(), ship.location, 1, ship.drawScale)) {
+            ship.setDestroyed();
           }
         }
       }

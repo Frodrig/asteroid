@@ -121,7 +121,7 @@ void updatePlayingState() {
 }
 
 void updatePlayingStateKeys() {
-  if (asteroidField.isFieldEmpty())
+  if (asteroidField.isFieldEmpty() && !ovniManager.existCurrentOvni())
     return;
 
   if (keyPressed) {

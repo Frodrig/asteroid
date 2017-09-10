@@ -124,6 +124,7 @@ class Asteroid {
     updateMove();
     if (currentGameState == GameState.PLAYING) {
       updateShipCollisionCheck();
+      updateOvniCollisionCheck();
     }
   }
   
@@ -134,10 +135,23 @@ class Asteroid {
   }
   
   void updateShipCollisionCheck() {
-    if (!ship.isInBlinkMode() && ship.checkCollisionWithAsteroid(this)) {
+    boolean collisionWithShip = 
+      !ship.isInBlinkMode() &&
+      MathUtils.checkIntersect(ship.location, this.location, ship.drawScale, this.circleColliderRadius);
+    if (collisionWithShip) {
       ship.setDestroyed();
-      hud.removeLive();
       hittedOrigin = ShooterOriginType.PLAYER;
+    }
+  }
+  
+  void updateOvniCollisionCheck() {
+    Ovni currentOvni = ovniManager.getCurrentOvni();
+    if (currentOvni != null) {
+      boolean collisionWithOvni = MathUtils.checkIntersect(currentOvni.getLocation(), this.location, currentOvni.drawScale, this.circleColliderRadius);
+      if (collisionWithOvni) {
+        currentOvni.setDestroyed();
+        hittedOrigin = ShooterOriginType.ENEMY;
+      }
     }
   }
    

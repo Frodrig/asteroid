@@ -15,11 +15,19 @@ class OvniManager {
   public boolean existCurrentOvni() {
     return currentOvni != null;
   }
+  
+  public Ovni getCurrentOvni() {
+    return currentOvni;
+  }
 
   public void update() {
     if (currentOvni != null) {
-      currentOvni.update();
-    }
+      if (currentOvni.isDestroyed()) {
+        currentOvni = null;
+      } else {
+        currentOvni.update();
+      }
+    }  
     
     if (millis() > nextSpawnTime) {
       nextSpawnTime = calculeNextSpawnTime();

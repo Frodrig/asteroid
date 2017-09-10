@@ -12,25 +12,48 @@ class Ovni extends Entity {
   private int horDirection;
   private float velocity;
   private Shooter shooter;
+  private boolean isDestroyed;
 
   Ovni(OvniType _type, PVector location) {
     super(location);
     type = _type;
     drawScale = OvniType.NORMAL== type ? 12 : 6;
     velocity = OvniType.NORMAL == type ? 2 : 2.8;
-    radius = drawScale / 2;
+    radius = drawScale * 2;
     horDirection = random(1) < 0.5 ? -1 : 1;
     setLocation(new PVector(horDirection < 0 ? width + radius : 0, random(height)));
     applyForce((new PVector(horDirection, 0)).normalize().mult(velocity));
     nextMovementUpdate = millis() + 2 * 1000;
     nextShootUpdate = calculeNextShootUpdate();
     shooter = new Shooter(ShooterOriginType.ENEMY);
+    isDestroyed = false;
   }
 
   public void update() {
     updateLogic();
     updateRender();
     shooter.update();
+  }
+  
+  public int getRadius() {
+    return radius;
+  }
+  
+  public void setDestroyedByShip() {
+    setDestroyed();
+    if (type == OvniType.NORMAL) {
+      hud.addPoints(200);
+    } else if (type == OvniType.ELITE) {
+       hud.addPoints(1000);
+    }
+  }
+  
+  public void setDestroyed() {
+    isDestroyed = true;
+  }
+
+  public boolean isDestroyed() {
+    return isDestroyed;
   }
   
   private int calculeNextShootUpdate() {
@@ -85,6 +108,8 @@ class Ovni extends Entity {
   private void updateRender() {
     noFill();
     stroke(255);
+    //ellipse(getLocation().x, getLocation().y, getRadius(), getRadius());
+    
     pushMatrix();
       translate(getLocation().x, getLocation().y);
       beginShape();

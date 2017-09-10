@@ -68,6 +68,7 @@ class Ship {
 
   void setDestroyed() {
     isDestroyed = true;
+    hud.removeLive();
   }
 
   void update() {
@@ -75,6 +76,7 @@ class Ship {
       spawn();
     }
     updateLogic();
+    updateOvniCollision();
     updateRender();
   }
 
@@ -92,6 +94,16 @@ class Ship {
     updateShipMovement();
     updateShipEdges();
     shooter.update();
+  }
+  
+  void updateOvniCollision() {
+    Ovni currentOvni = ovniManager.getCurrentOvni();
+    if (currentOvni != null) {
+      if (MathUtils.checkIntersect(ship.location, currentOvni.getLocation(), ship.drawScale, currentOvni.getRadius())) {
+        setDestroyed();
+        currentOvni.setDestroyedByShip();
+      }
+    }
   }
 
   void updateShipMovement() {
@@ -158,7 +170,7 @@ class Ship {
       line(-halfDrawScale - 6, -halfDrawScale*0.3 - 6, -halfDrawScale - 6, halfDrawScale*0.3 + 6);
       //line(-halfDrawScale - 9, -halfDrawScale*0.1 - 9, -halfDrawScale - 9, halfDrawScale*0.1 + 9);
     }
-    popMatrix();
+    popMatrix();    
   }
 
   void renderDebug() {
