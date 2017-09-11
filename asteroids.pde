@@ -1,9 +1,14 @@
-Ship ship; //<>//
+import ddf.minim.*; //<>//
+
+Minim minim;
+
+Ship ship;
 StarField starField;
 AsteroidField asteroidField;
 HUD hud;
 ScoreManager scoreManager;
 OvniManager ovniManager;
+SoundManager soundManager;
 boolean spaceKeyPress;
 int stage;
 PFont debugFont;
@@ -29,11 +34,13 @@ void settings() {
 void setup() {
   //fullScreen();
   stage = 1;
+  minim = new Minim(this);
   ship = new Ship();
   starField = new StarField(100, 0.5);
   hud = new HUD();
   scoreManager = new ScoreManager();
   ovniManager = new OvniManager();
+  soundManager = new SoundManager();
   spaceKeyPress = false;
   debugFont = createFont("Arial", 12);
   asteroidFontBig = createFont("Vectorb.ttf", 64);

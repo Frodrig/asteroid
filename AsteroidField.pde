@@ -65,6 +65,11 @@ class AsteroidField { //<>//
         if (asteroidIt.circleColliderRadius > minRadiusToDestroyAsteroid) {
           int numNewAsteroids = 2;
           int radiusOfNewAsteroids = int(asteroidIt.circleColliderRadius) / 2;
+          if (radiusOfNewAsteroids > minRadiusToDestroyAsteroid) {
+            soundManager.playBigAsteroidExplosion();
+          } else {
+            soundManager.playMediumAsteroidExplosion();
+          }
           float destroyAngleDirInitial = random(0, TWO_PI);
           for (int newAsteroidCounter = 0; newAsteroidCounter < numNewAsteroids; ++newAsteroidCounter) {
             Asteroid newAsteroid = new Asteroid(this, radiusOfNewAsteroids, velocityRange, asteroidIt.location);
@@ -74,7 +79,10 @@ class AsteroidField { //<>//
             newAsteroid.fadeAlpha = 55;
             newAsteroids.add(newAsteroid);
           }
+        } else {
+          soundManager.playSmallAsteroidExplosion();
         }
+
         if (asteroidIt.isHittedByPlayer()) {
           hud.addPointsByDestroyAsteroid(asteroidIt.circleColliderRadius);
         }

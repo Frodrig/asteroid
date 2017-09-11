@@ -16,6 +16,7 @@ class Shoot {
       endMillis = millis() + int(1000.0 * 0.8);
     }
     drawScale = 2;
+    soundManager.playShootSound();
   }
   
   public boolean isFinished() {

@@ -1,6 +1,6 @@
 enum OvniType {
   NORMAL, 
-  ELITE
+    ELITE
 };
 
 class Ovni extends Entity {  
@@ -27,6 +27,7 @@ class Ovni extends Entity {
     nextShootUpdate = calculeNextShootUpdate();
     shooter = new Shooter(ShooterOriginType.ENEMY);
     isDestroyed = false;
+    playAudio();
   }
 
   public void update() {
@@ -34,28 +35,29 @@ class Ovni extends Entity {
     updateRender();
     shooter.update();
   }
-  
+
   public int getRadius() {
     return radius;
   }
-  
+
   public void setDestroyedByShip() {
     setDestroyed();
     if (type == OvniType.NORMAL) {
       hud.addPoints(200);
     } else if (type == OvniType.ELITE) {
-       hud.addPoints(1000);
+      hud.addPoints(1000);
     }
   }
-  
+
   public void setDestroyed() {
     isDestroyed = true;
+    stopAudio();
   }
 
   public boolean isDestroyed() {
     return isDestroyed;
   }
-  
+
   private int calculeNextShootUpdate() {
     if (OvniType.NORMAL == type) {
       return millis() + 1000;
@@ -63,7 +65,7 @@ class Ovni extends Entity {
       return millis() + 500;
     }
   }
-  
+
   private void updateLogic() {
     if (millis() > nextMovementUpdate) {
       super.stopMovement();
@@ -74,12 +76,12 @@ class Ovni extends Entity {
       shoot();
       nextShootUpdate = calculeNextShootUpdate();
     }
-    
+
     super.updateMovement();
-    updateEdges(); 
+    updateEdges();
   }
-  
-  
+
+
   private void shoot() {
     if (OvniType.NORMAL == type) {
       float angle = random(TWO_PI);
@@ -90,43 +92,59 @@ class Ovni extends Entity {
       shooter.shoot(direction, getLocation());
     }
   }
-  
+
+  private void playAudio() {
+    if (type == OvniType.NORMAL) {
+      soundManager.beginPlayingNormalOvni();
+    } else if (type == OvniType.ELITE) {
+      soundManager.beginPlayingEliteOvni();
+    }
+  }
+
+  private void stopAudio() {
+    if (type == OvniType.NORMAL) {
+      soundManager.endPlayingNormalOvni();
+    } else if (type == OvniType.ELITE) {
+      soundManager.endPlayingEliteOvni();
+    }
+  }
+
   private void updateEdges() {
     if (getLocation().x > width) {
       setLocation(new PVector(0, getLocation().y));
     } else if (getLocation().x < 0) {
-       setLocation(new PVector(width, getLocation().y));
+      setLocation(new PVector(width, getLocation().y));
     }
-    
+
     if (getLocation().y > height) {
-       setLocation(new PVector(getLocation().x, 0));
+      setLocation(new PVector(getLocation().x, 0));
     } else if (getLocation().y < 0) {
-        setLocation(new PVector(getLocation().x, height));
+      setLocation(new PVector(getLocation().x, height));
     }
   }
-  
+
   private void updateRender() {
     noFill();
     stroke(255);
     //ellipse(getLocation().x, getLocation().y, getRadius(), getRadius());
-    
+
     pushMatrix();
-      translate(getLocation().x, getLocation().y);
-      beginShape();
-      vertex(-2 * drawScale, 0);
-      vertex(-1 * drawScale, -1 * drawScale);
-      vertex(-1 * drawScale, -2 * drawScale);
-      vertex(1 * drawScale, -2 * drawScale);
-      vertex(1 * drawScale, -1 * drawScale);
-      vertex(1 * drawScale, -1 * drawScale);      
-      vertex(2 * drawScale, 0);      
-      vertex(1 * drawScale, 1 * drawScale);      
-      vertex(0, 1 * drawScale);      
-      vertex(-1 * drawScale, 1 * drawScale);      
-      endShape(CLOSE);  
-      line (-2 * drawScale, 0, 2 * drawScale, 0);
-      line (-1 * drawScale, -1 * drawScale, 1 * drawScale, -1 * drawScale);
-     // arc(0, -drawScale, drawScale*2, drawScale, -drawScale, PI);
+    translate(getLocation().x, getLocation().y);
+    beginShape();
+    vertex(-2 * drawScale, 0);
+    vertex(-1 * drawScale, -1 * drawScale);
+    vertex(-1 * drawScale, -2 * drawScale);
+    vertex(1 * drawScale, -2 * drawScale);
+    vertex(1 * drawScale, -1 * drawScale);
+    vertex(1 * drawScale, -1 * drawScale);      
+    vertex(2 * drawScale, 0);      
+    vertex(1 * drawScale, 1 * drawScale);      
+    vertex(0, 1 * drawScale);      
+    vertex(-1 * drawScale, 1 * drawScale);      
+    endShape(CLOSE);  
+    line (-2 * drawScale, 0, 2 * drawScale, 0);
+    line (-1 * drawScale, -1 * drawScale, 1 * drawScale, -1 * drawScale);
+    // arc(0, -drawScale, drawScale*2, drawScale, -drawScale, PI);
     popMatrix();
   }
 }
