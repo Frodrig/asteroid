@@ -194,6 +194,7 @@ class Asteroid {
   }
   
   void renderDebug() {
+    strokeWeight(1);
     stroke(255);
     noFill();
     ellipse(location.x, location.y, circleColliderRadius * 2, circleColliderRadius  * 2);

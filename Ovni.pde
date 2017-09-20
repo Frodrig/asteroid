@@ -43,8 +43,10 @@ class Ovni extends Entity {
   public void setDestroyedByShip() {
     setDestroyed();
     if (type == OvniType.NORMAL) {
+      explosionManager.createNormalOvniExplosion(super.getLocation());
       hud.addPoints(200);
     } else if (type == OvniType.ELITE) {
+      explosionManager.createEliteOvniExplosion(super.getLocation());
       hud.addPoints(1000);
     }
   }

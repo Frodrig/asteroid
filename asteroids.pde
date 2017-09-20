@@ -9,6 +9,7 @@ HUD hud;
 ScoreManager scoreManager;
 OvniManager ovniManager;
 SoundManager soundManager;
+ExplosionManager explosionManager;
 boolean spaceKeyPressed;
 float boostKeyPressTime;
 int stage;
@@ -41,6 +42,7 @@ void setup() {
   scoreManager = new ScoreManager();
   ovniManager = new OvniManager();
   soundManager = new SoundManager();
+  explosionManager = new ExplosionManager();
   spaceKeyPressed = false;
   boostKeyPressTime = 0;
   debugFont = createFont("Arial", 12);
@@ -167,6 +169,7 @@ void updatePlayingStateScene() {
     ovniManager.update();
   }
 
+  explosionManager.update();
   hud.update(); 
 
   if (hud.lives < 1) {

@@ -67,8 +67,10 @@ class AsteroidField { //<>//
           int radiusOfNewAsteroids = int(asteroidIt.circleColliderRadius) / 2;
           if (radiusOfNewAsteroids > minRadiusToDestroyAsteroid) {
             soundManager.playBigAsteroidExplosion();
+            explosionManager.createBigAsteroidExplosion(asteroidIt.location);
           } else {
             soundManager.playMediumAsteroidExplosion();
+            explosionManager.createMediumAsteroidExplosion(asteroidIt.location);
           }
           float destroyAngleDirInitial = random(0, TWO_PI);
           for (int newAsteroidCounter = 0; newAsteroidCounter < numNewAsteroids; ++newAsteroidCounter) {
@@ -81,6 +83,7 @@ class AsteroidField { //<>//
           }
         } else {
           soundManager.playSmallAsteroidExplosion();
+          explosionManager.createSmallAsteroidExplosion(asteroidIt.location);
         }
 
         if (asteroidIt.isHittedByPlayer()) {
