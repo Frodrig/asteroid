@@ -5,4 +5,10 @@
     boolean intersect = distance < (radius1 + radius2);
     return intersect;
   }
+  
+  static boolean isAlmostEqual(double a, double b) {
+    boolean isAlmost = Math.abs(a - b) < 0.001;
+    
+    return isAlmost;
+  }
 }

@@ -6,6 +6,7 @@ class SoundManager {
   AudioSample bigAsteroidExplosion;
   AudioPlayer normalOvniPlayer;
   AudioPlayer eliteOvniPlayer;
+  AudioPlayer thrust;
 
   SoundManager() {
     shot = minim.loadSample( "fire.wav", 512);
@@ -14,6 +15,7 @@ class SoundManager {
     bigAsteroidExplosion = minim.loadSample( "bangLarge.wav", 512);
     normalOvniPlayer = minim.loadFile("saucerBig.wav");
     eliteOvniPlayer = minim.loadFile("saucerSmall.wav");
+    thrust = minim.loadFile("thrust.wav");
   }
 
   public void playShootSound() {
@@ -37,8 +39,8 @@ class SoundManager {
   }
 
   public void endPlayingNormalOvni() {
-    normalOvniPlayer.rewind();
     normalOvniPlayer.pause();
+    normalOvniPlayer.rewind();
   }
 
   public void beginPlayingEliteOvni() {
@@ -46,7 +48,20 @@ class SoundManager {
   }
 
   public void endPlayingEliteOvni() {
-    eliteOvniPlayer.rewind();
     eliteOvniPlayer.pause();
+    eliteOvniPlayer.rewind();
+  }
+
+  public void beginPlayingBoost() {
+    if (!thrust.isPlaying()) {
+      //thrust.loop();
+    }
+  }
+
+  public void endPlayingBoost() {
+   // if (thrust.isPlaying()) {
+      //thrust.pause();
+      //thrust.rewind();
+    //}
   }
 }

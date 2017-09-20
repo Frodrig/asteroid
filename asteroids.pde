@@ -9,7 +9,8 @@ HUD hud;
 ScoreManager scoreManager;
 OvniManager ovniManager;
 SoundManager soundManager;
-boolean spaceKeyPress;
+boolean spaceKeyPressed;
+float boostKeyPressTime;
 int stage;
 PFont debugFont;
 enum GameState {
@@ -26,7 +27,6 @@ boolean curScoreNameKeyPressed;
 int auxiliarTimer;
 boolean shouldDrawHighScores;
 
-
 void settings() {
   size(962, 720);
 }
@@ -41,7 +41,8 @@ void setup() {
   scoreManager = new ScoreManager();
   ovniManager = new OvniManager();
   soundManager = new SoundManager();
-  spaceKeyPress = false;
+  spaceKeyPressed = false;
+  boostKeyPressTime = 0;
   debugFont = createFont("Arial", 12);
   asteroidFontBig = createFont("Vectorb.ttf", 64);
   asteroidFontMed = createFont("Vectorb.ttf", 32);
@@ -138,12 +139,15 @@ void updatePlayingStateKeys() {
       ship.turnRight();
     } else if (key == CODED && keyCode == UP) {
       ship.boost();
-    } else if (key == ' '&& !spaceKeyPress) {
+      boostKeyPressTime += 0.006;
+      boostKeyPressTime = constrain(boostKeyPressTime, 0, 1);
+    } else if (key == ' '&& !spaceKeyPressed) {
       ship.shoot();
-      spaceKeyPress = true;
+      spaceKeyPressed = true;
     }
   } else {
-    spaceKeyPress = false;
+    spaceKeyPressed = false;
+    boostKeyPressTime = 0;
   }
 }
 

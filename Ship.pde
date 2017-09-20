@@ -20,7 +20,7 @@ class Ship {
     velocity = new PVector();
     angle = -HALF_PI;
     angularVelocity = 0.1;
-    dumping = 0.96;
+    dumping = 0.97;
     boostMag = 0.8;
     drawScale = 32;
     halfDrawScale = drawScale / 2;
@@ -41,7 +41,8 @@ class Ship {
   }
 
   void boost() {
-    PVector boostAcceleration = generateVectorDirection().mult(boostMag);
+    soundManager.beginPlayingBoost();
+    PVector boostAcceleration = generateVectorDirection().mult(boostMag * boostKeyPressTime);
     acceleration.add(boostAcceleration);
   }
 
@@ -94,8 +95,12 @@ class Ship {
     updateShipMovement();
     updateShipEdges();
     shooter.update();
+    //      println(velocity.mag());
+    if (MathUtils.isAlmostEqual(velocity.mag(), 0)) {
+      soundManager.endPlayingBoost();
+    }
   }
-  
+
   void updateOvniCollision() {
     Ovni currentOvni = ovniManager.getCurrentOvni();
     if (currentOvni != null) {
@@ -170,7 +175,7 @@ class Ship {
       line(-halfDrawScale - 6, -halfDrawScale*0.3 - 6, -halfDrawScale - 6, halfDrawScale*0.3 + 6);
       //line(-halfDrawScale - 9, -halfDrawScale*0.1 - 9, -halfDrawScale - 9, halfDrawScale*0.1 + 9);
     }
-    popMatrix();    
+    popMatrix();
   }
 
   void renderDebug() {
