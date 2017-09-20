@@ -21,7 +21,7 @@ class Ship {
     angle = -HALF_PI;
     angularVelocity = 0.1;
     dumping = 0.97;
-    boostMag = 0.8;
+    boostMag = 0.9;
     drawScale = 32;
     halfDrawScale = drawScale / 2;
     shooter = new Shooter(ShooterOriginType.PLAYER);
@@ -68,6 +68,7 @@ class Ship {
   }
 
   void setDestroyed() {
+    explosionManager.createShipExplosion(location);
     isDestroyed = true;
     hud.removeLive();
   }
